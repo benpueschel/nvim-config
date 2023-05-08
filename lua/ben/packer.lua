@@ -11,23 +11,22 @@ return require('packer').startup(function(use)
 
 	use {
 		'nvim-telescope/telescope.nvim', tag = '0.1.1',
-		-- or                            , branch = '0.1.x',
 		requires = { {'nvim-lua/plenary.nvim'} }
 	}
 
-	for i, v in ipairs(require('ben.themes')) do
+	for _, v in ipairs(require('ben.themes')) do
 		use(v)
 	end
-	
+
 	use {
-		'nvim-treesitter/nvim-treesitter', 
-		run = ':TSUpdate' 
+		'nvim-treesitter/nvim-treesitter',
+		run = ':TSUpdate'
 	}
 	use 'nvim-treesitter/playground'
 
 	use {
 		'nvim-lualine/lualine.nvim',
-		requires = { 'nvim-tree/nvim-web-devicons', opt = true }
+		requires = 'nvim-tree/nvim-web-devicons'
 	}
 
 	use {
@@ -37,7 +36,7 @@ return require('packer').startup(function(use)
 
 	use {
 		'nvim-tree/nvim-tree.lua',
-		requires = { {'nvim-tree/nvim-web-devicons'} }
+		requires = 'nvim-tree/nvim-web-devicons'
 	}
 
 	use {
