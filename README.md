@@ -1,4 +1,4 @@
-# vimcfg
+# nvim-config
 
 ## Prerequisites 
 
