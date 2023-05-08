@@ -16,4 +16,7 @@ lsp.setup_nvim_cmp({
 	mapping = cmp_mappings
 })
 
+lsp.skip_server_setup({'clangd'})
 lsp.setup()
+
+require('clangd_extensions').setup() --TODO: not optimal, only call if clangd is installed?
