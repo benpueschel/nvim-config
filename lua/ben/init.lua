@@ -3,6 +3,7 @@ require('ben.packer')
 
 vim.opt.number = true
 vim.opt.relativenumber = true
+vim.opt.exrc = true
 
 vim.cmd.colorscheme('catppuccin-macchiato')
 
