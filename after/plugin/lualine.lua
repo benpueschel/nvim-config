@@ -3,6 +3,9 @@ local wb = {
 		{
 			'buffers',
 			show_filename_only = true,
+			symbols = {
+				alternate_file = ''
+			}
 		}
 	},
 	lualine_b = {},
