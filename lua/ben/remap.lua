@@ -11,4 +11,4 @@ vim.keymap.set('n', '<C-l>', '<C-w>l')
 
 vim.keymap.set('n', '<leader>fe', vim.cmd.NvimTreeToggle)
 vim.keymap.set('n', '<leader>w', vim.cmd.w)
-vim.keymap.set('n', '<leader>d', vim.cmd.bd) --TODO: close buffer without closing the window
+vim.keymap.set('n', '<leader>d', ':bp|bd#<CR>') -- Move to previous buffer and delete the last one
