@@ -15,14 +15,13 @@ return require('packer').startup(function(use)
 		requires = { {'nvim-lua/plenary.nvim'} }
 	}
 
+	for i, v in ipairs(require('ben.themes')) do
+		use(v)
+	end
+	
 	use {
-		'dracula/vim',
-		as = 'dracula'
-	}
-
-	use {
-		'nvim-treesitter/nvim-treesitter',
-		run = ':TSUpdate'
+		'nvim-treesitter/nvim-treesitter', 
+		run = ':TSUpdate' 
 	}
 	use 'nvim-treesitter/playground'
 
