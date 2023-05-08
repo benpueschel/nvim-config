@@ -12,3 +12,7 @@ vim.keymap.set('n', '<C-l>', '<C-w>l')
 vim.keymap.set('n', '<leader>fe', vim.cmd.NvimTreeToggle)
 vim.keymap.set('n', '<leader>w', vim.cmd.w)
 vim.keymap.set('n', '<leader>d', ':bp|bd#<CR>') -- Move to previous buffer and delete the last one
+
+vim.keymap.set('i', 'jk', '<Esc>')
+vim.keymap.set('n', '<C-d>', '<C-d>zz')
+vim.keymap.set('n', '<C-u>', '<C-u>zz')
