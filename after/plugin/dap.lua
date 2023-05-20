@@ -1,11 +1,11 @@
 local dap = require('dap')
-local widgets = require('dap.ui.widgets')
 
 dap.adapters.lldb = {
 	type = 'executable',
 	command = 'lldb-vscode',
 	name = 'lldb'
 }
+--[[
 dap.configurations.cpp = {
 	{
 		name = 'Launch',
@@ -21,8 +21,7 @@ dap.configurations.cpp = {
 		args = {}
 	}
 }
-
-local currentWindow = nil
+--]]
 
 vim.keymap.set('n', '<leader>bp', dap.toggle_breakpoint)
 vim.keymap.set('n', '<leader>is', dap.repl.open)
