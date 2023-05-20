@@ -1,6 +1,7 @@
 local plugins = {
-	
-	{ 'rstacruz/vim-closer' },
+
+	{ 'm4xshen/autoclose.nvim' },
+	{ 'tpope/vim-fugitive' },
 	{ 'lewis6991/gitsigns.nvim' },
 
 	{ 'nvim-telescope/telescope.nvim', tag = '0.1.1', requires = 'nvim-lua/plenary.nvim' },
