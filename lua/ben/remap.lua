@@ -21,3 +21,7 @@ vim.keymap.set('n', 'h', 'hzz')
 vim.keymap.set('n', 'j', 'jzz')
 vim.keymap.set('n', 'k', 'kzz')
 vim.keymap.set('n', 'l', 'lzz')
+
+-- center cursor on search
+vim.keymap.set('n', 'n', 'nzzzv')
+vim.keymap.set('n', 'N', 'Nzzzv')
