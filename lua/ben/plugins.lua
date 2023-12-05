@@ -4,7 +4,7 @@ local plugins = {
 	{ 'tpope/vim-fugitive' },
 	{ 'lewis6991/gitsigns.nvim' },
 
-	{ 'nvim-telescope/telescope.nvim', tag = '0.1.1', requires = 'nvim-lua/plenary.nvim' },
+	{ 'nvim-telescope/telescope.nvim', tag = '0.1.5', requires = 'nvim-lua/plenary.nvim' },
 	{ 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' },
 	{ 'nvim-lualine/lualine.nvim', requires = 'nvim-tree/nvim-web-devicons' },
 	{ 'folke/todo-comments.nvim', requires = 'nvim-lua/plenary.nvim' },
