@@ -1,5 +1,5 @@
 require('ben.remap')
-require('ben.packer')
+require('ben.lazy')
 
 vim.opt.number = true
 vim.opt.relativenumber = true
