@@ -40,8 +40,8 @@ return {
 			local cmp = require('cmp')
 			local cmp_select = { behavior = cmp.SelectBehavior.Select }
 			local cmp_mappings = lsp.defaults.cmp_mappings({
-				['['] = cmp.mapping.select_prev_item(cmp_select),
-				[']'] = cmp.mapping.select_next_item(cmp_select),
+				['<C-]>'] = cmp.mapping.select_prev_item(cmp_select),
+				['<C-[>'] = cmp.mapping.select_next_item(cmp_select),
 				['<C-y>'] = cmp.mapping.confirm({ select = true }),
 				['<CR>'] = cmp.mapping.confirm({ select = false }),
 				['<C-Space>'] = cmp.mapping.complete(),
