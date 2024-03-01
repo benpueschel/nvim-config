@@ -1,3 +1,3 @@
 return {
-	{ 'tpope/vim-fugitive', lazy = false },
+	{ 'tpope/vim-fugitive', event = 'VeryLazy' },
 }

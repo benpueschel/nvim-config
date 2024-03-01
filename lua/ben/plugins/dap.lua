@@ -9,6 +9,9 @@ return {
 				command = 'lldb-vscode',
 				name = 'lldb'
 			}
+			dap.configurations.rust = {
+
+			}
 			--[[
 			dap.configurations.cpp = {
 				{

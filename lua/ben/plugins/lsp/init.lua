@@ -1,122 +1,88 @@
 return {
 	{
-		'VonHeikemen/lsp-zero.nvim',
-		branch = 'v3.x',
+		'neovim/nvim-lspconfig',
+		event = 'VeryLazy',
 		dependencies = {
-			-- LSP Support
-			{ 'neovim/nvim-lspconfig' },             -- Required
-			{                                        -- Optional
+			{ -- Optional
 				'williamboman/mason.nvim',
 				build = function()
 					pcall(vim.cmd, 'MasonUpdate')
 				end,
 			},
-			{'williamboman/mason-lspconfig.nvim'}, -- Optional
-			{ 'p00f/clangd_extensions.nvim' },     -- Optional
-			-- Autocompletion
-			{'hrsh7th/nvim-cmp'},     -- Required
-			{'hrsh7th/cmp-nvim-lsp'}, -- Required
-			{'L3MON4D3/LuaSnip'},     -- Required
+			'williamboman/mason-lspconfig.nvim', -- Optional
+			'WhoIsSethDaniel/mason-tool-installer.nvim', -- Optional
+			'j-hui/fidget.nvim',                -- Optional
+			'folke/trouble.nvim',               -- Optional
+			'folke/neodev.nvim',                -- Optional
 		},
-		init = function() 
-			local lsp = require('lsp-zero')
+		config = function()
+			vim.api.nvim_create_autocmd('LspAttach', {
+				group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+				callback = function(ev)
+					local builtin = require('telescope.builtin')
 
-			lsp.on_attach(function(client, bufnr)
-				local builtin = require('telescope.builtin')
+					local opts = { buffer = ev.buf }
+					vim.keymap.set('n', '<leader>gl', builtin.diagnostics, opts)
+					vim.keymap.set('n', 'gl', vim.diagnostic.open_float, opts)
+					vim.keymap.set('n', 'gr', builtin.lsp_references, opts)
+					vim.keymap.set('n', 'gd', builtin.lsp_definitions, opts)
+					vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+					vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+					vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+					vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, opts)
+					vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
+					vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, opts)
+					vim.keymap.set('n', '<leader>fm', function()
+						vim.lsp.buf.format { async = true }
+					end, opts)
+				end,
+			})
 
-				local opts = { buffer = bufnr }
-				vim.keymap.set('n', 'gr', builtin.lsp_references, opts)
-				vim.keymap.set('n', 'gd', builtin.lsp_definitions, opts)
-				vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
-				vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-				vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-				vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
-				vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
-				vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
-				vim.keymap.set('n', '<leader>fm', function()
-					vim.lsp.buf.format { async = true }
-				end, opts)
-			end)
+			local capabilities = vim.lsp.protocol.make_client_capabilities()
+			-- capabilities = vim.tbl_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
-			require('mason').setup()
-			require('mason-lspconfig').setup({
-				handlers = {
-					lsp.default_setup,
+			require('neodev').setup()
+
+			local servers = {
+				lua_ls = {
+					runtime = { version = 'LuaJIT' },
+					workspace = {
+						checkThirdParty = false,
+						-- Tells lua_ls where to find all the Lua files that you have loaded
+						-- for your neovim configuration.
+						library = {
+							'${3rd}/luv/library',
+							unpack(vim.api.nvim_get_runtime_file('', true)),
+						},
+					},
 				}
-			})
-
-			require('clangd_extensions').setup() --TODO: not optimal, only call if clangd is installed?
-
-			local cmp = require('cmp')
-			local cmp_select = { behavior = cmp.SelectBehavior.Select }
-			local cmp_mappings = lsp.defaults.cmp_mappings({
-				['<Esc>'] = cmp.mapping.abort(),
-				['<C-f>'] = cmp.mapping.scroll_docs(4),
-				['<C-b>'] = cmp.mapping.scroll_docs(-4),
-				['<C-]>'] = cmp.mapping.select_next_item(cmp_select),
-				['<C-[>'] = cmp.mapping.select_prev_item(cmp_select),
-				['<C-y>'] = cmp.mapping.confirm({ select = true }),
-				['<CR>'] = cmp.mapping.confirm({ select = false }),
-				['<C-Space>'] = cmp.mapping.complete(),
-			})
-
-			local kind_icons = {
-				Text = "",
-				Method = "󰆧",
-				Function = "󰊕",
-				Constructor = "",
-				Field = "󰇽",
-				Variable = "󰀫",
-				Class = "󰠱",
-				Interface = "",
-				Module = "",
-				Property = "󰜢",
-				Unit = "",
-				Value = "󰎠",
-				Enum = "",
-				Keyword = "󰌋",
-				Snippet = "",
-				Color = "󰏘",
-				File = "󰈙",
-				Reference = "",
-				Folder = "󰉋",
-				EnumMember = "",
-				Constant = "󰏿",
-				Struct = "",
-				Event = "",
-				Operator = "󰆕",
-				TypeParameter = "󰅲",
 			}
-
-			cmp.setup({
-				mapping = cmp_mappings,
-				window = {
-					completion = cmp.config.window.bordered({
-						size_padding = 2
-					}),
-					documentation = cmp.config.window.bordered({
-						size_padding = 2,
-					}),
-				},
-
-				formatting = {
-					format = function(entry, vim_item)
-						-- Kind icons
-						vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind)
-						-- This concatenates the icons with the name of the item kind
-
-						-- Source
-						vim_item.menu = ({
-							buffer = "",
-							nvim_lsp = "",
-							luasnip = "",
-							nvim_lua = "",
-							latex_symbols = "",
-						})[entry.source.name]
-						return vim_item
-					end
-				}
+			require('mason').setup()
+			local ensure_installed = vim.tbl_keys(servers or {})
+			vim.list_extend(ensure_installed, {
+				'stylua', -- Used to format lua code
 			})
+			require('mason-tool-installer').setup { ensure_installed = ensure_installed }
+			require('mason-lspconfig').setup {
+				handlers = {
+					function(server_name)
+						local server = servers[server_name] or {}
+						require('lspconfig')[server_name].setup {
+							cmd = server.cmd,
+							settings = server.settings,
+							filetypes = server.filetypes,
+							-- This handles overriding only values explicitly passed
+							-- by the server configuration above. Useful when disabling
+							-- certain features of an LSP (for example, turning off formatting for tsserver)
+							capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {}),
+						}
+					end,
+					['rust-analyzer'] = nil,
+				},
+			}
 		end,
-	}
+	},
+	require('ben.plugins.lsp.cmp'),
+	require('ben.plugins.lsp.clangd'),
+	require('ben.plugins.lsp.rust_analyzer'),
 }
