@@ -11,17 +11,17 @@ return {
 			},
 			'williamboman/mason-lspconfig.nvim', -- Optional
 			'WhoIsSethDaniel/mason-tool-installer.nvim', -- Optional
-			'j-hui/fidget.nvim',                -- Optional
+			{ 'j-hui/fidget.nvim', opts = {} }, -- Optional
 			'folke/trouble.nvim',               -- Optional
 			'folke/neodev.nvim',                -- Optional
 		},
 		config = function()
 			vim.api.nvim_create_autocmd('LspAttach', {
 				group = vim.api.nvim_create_augroup('UserLspConfig', {}),
-				callback = function(ev)
+				callback = function(event)
 					local builtin = require('telescope.builtin')
 
-					local opts = { buffer = ev.buf }
+					local opts = { buffer = event.buf }
 					vim.keymap.set('n', '<leader>gl', builtin.diagnostics, opts)
 					vim.keymap.set('n', 'gl', vim.diagnostic.open_float, opts)
 					vim.keymap.set('n', 'gr', builtin.lsp_references, opts)
@@ -35,11 +35,28 @@ return {
 					vim.keymap.set('n', '<leader>fm', function()
 						vim.lsp.buf.format { async = true }
 					end, opts)
+					-- The following two autocommands are used to highlight references of the
+					-- word under your cursor when your cursor rests there for a little while.
+					--    See `:help CursorHold` for information about when this is executed
+					--
+					-- When you move your cursor, the highlights will be cleared (the second autocommand).
+					local client = vim.lsp.get_client_by_id(event.data.client_id)
+					if client and client.server_capabilities.documentHighlightProvider then
+						vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
+							buffer = event.buf,
+							callback = vim.lsp.buf.document_highlight,
+						})
+
+						vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
+							buffer = event.buf,
+							callback = vim.lsp.buf.clear_references,
+						})
+					end
 				end,
 			})
 
 			local capabilities = vim.lsp.protocol.make_client_capabilities()
-			-- capabilities = vim.tbl_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
+			capabilities = vim.tbl_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
 			require('neodev').setup()
 
