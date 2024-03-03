@@ -2,8 +2,8 @@ return {
 	{
 		'nvim-tree/nvim-tree.lua',
 		dependencies = 'nvim-tree/nvim-web-devicons',
-		lazy = true,
-		init = function()
+		event = 'VeryLazy',
+		config = function()
 			-- set termguicolors to enable highlight groups
 			vim.opt.termguicolors = true
 

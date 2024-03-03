@@ -1,7 +1,11 @@
 return {
 	{
 		'mfussenegger/nvim-dap',
-		init = function()
+		dependencies = {
+			'theHamsta/nvim-dap-virtual-text',
+		},
+		event = 'BufReadPre',
+		config = function()
 			local dap = require('dap')
 
 			dap.adapters.lldb = {
@@ -35,11 +39,7 @@ return {
 
 			vim.keymap.set('n', '<F5>', dap.continue)
 			vim.keymap.set('n', '<C-F5>', dap.close)
-		end
-	},
-	{
-		'theHamsta/nvim-dap-virtual-text',
-		init = function()
+
 			require('nvim-dap-virtual-text').setup()
 		end
 	},

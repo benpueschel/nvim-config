@@ -2,7 +2,8 @@ return {
 	{
 		'nvim-lualine/lualine.nvim',
 		dependencies = 'nvim-tree/nvim-web-devicons',
-		init = function()
+		event = 'VeryLazy',
+		config = function()
 			local wb = {
 				lualine_a = {
 					{

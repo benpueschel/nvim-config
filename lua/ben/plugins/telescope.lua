@@ -3,7 +3,7 @@ return {
 		'nvim-telescope/telescope.nvim',
 		event = 'VeryLazy',
 		dependencies = 'nvim-lua/plenary.nvim',
-		init = function()
+		config = function()
 			local builtin = require('telescope.builtin')
 			local telescope = require('telescope')
 
@@ -18,7 +18,7 @@ return {
 					find_files = {
 						-- `hidden = true` will still show the inside of `.git/` as it's not `.gitignore`d.
 						find_command = { "rg", "--files", "--hidden", "--glob", "!**/.git/*" },
-					}
+					},
 				},
 			})
 

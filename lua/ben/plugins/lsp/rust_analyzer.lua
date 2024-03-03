@@ -1,7 +1,7 @@
 return {
 	{
 		'mrcjkb/rustaceanvim',
-		event = 'VeryLazy',
+		event = 'BufReadPre',
 		ft = { 'rust' },
 	}
 }
