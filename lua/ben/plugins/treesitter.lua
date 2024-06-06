@@ -1,6 +1,11 @@
 return {
 	{
 		'nvim-treesitter/nvim-treesitter',
+		-- depends on treesitter playground
+		dependencies = {
+			'nvim-treesitter/playground',
+		},
+
 		build = ':TSUpdate',
 		event = 'VeryLazy',
 		config = function()
