@@ -1,13 +1,14 @@
 return {
 	'hrsh7th/nvim-cmp',
 
-	event = 'InsertEnter',
+	event = 'VeryLazy',
 
 	dependencies = {
 		'hrsh7th/cmp-nvim-lsp',
 		'L3MON4D3/LuaSnip',
 		'saadparwaiz1/cmp_luasnip',
 		'neovim/nvim-lspconfig',
+		'petertriho/cmp-git',
 	},
 
 	config = function()
@@ -16,7 +17,7 @@ return {
 		local cmp_mappings = cmp.mapping.preset.insert({
 			['<Esc>'] = cmp.mapping.abort(),
 			['<C-f>'] = cmp.mapping.scroll_docs(4),
-			['<C-b>'] = cmp.mapping.scroll_docs(-4),
+			['<C-d>'] = cmp.mapping.scroll_docs(-4),
 			['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
 			['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
 			['<C-y>'] = cmp.mapping.confirm({ select = true }),
@@ -65,6 +66,7 @@ return {
 			},
 			sources = cmp.config.sources(
 				{
+					{ name = 'git' },
 					{ name = 'nvim_lsp' },
 					{ name = 'luasnip' },
 				},
@@ -79,6 +81,8 @@ return {
 			},
 
 			formatting = {
+				fields = { 'abbr', 'kind' },
+				expandable_indicator = true,
 				format = function(entry, vim_item)
 					-- Kind icons
 					-- This concatenates the icons with the name of the item kind
@@ -96,5 +100,6 @@ return {
 				end
 			}
 		})
+		require('cmp_git').setup()
 	end
 }
