@@ -10,7 +10,7 @@ return {
 
 			dap.adapters.lldb = {
 				type = 'executable',
-				command = 'lldb-vscode',
+				command = 'lldb-dap',
 				name = 'lldb'
 			}
 			dap.configurations.rust = {
@@ -40,7 +40,9 @@ return {
 			vim.keymap.set('n', '<F5>', dap.continue)
 			vim.keymap.set('n', '<C-F5>', dap.close)
 
-			require('nvim-dap-virtual-text').setup()
+			require('nvim-dap-virtual-text').setup({
+				enabled = true,
+			})
 		end
 	},
 }
