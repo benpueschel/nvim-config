@@ -13,6 +13,7 @@ vim.opt.shiftwidth = 4
 vim.opt.scrolloff = 20
 
 vim.opt.colorcolumn = "80"
+vim.opt.inccommand = "split"
 
 -- remove trailing whitespace on save
 vim.api.nvim_create_autocmd("BufWritePre", {
