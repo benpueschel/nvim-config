@@ -27,6 +27,7 @@ return {
 					vim.keymap.set('n', 'gd', builtin.lsp_definitions, opts)
 					vim.keymap.set('n', 'gi', builtin.lsp_implementations, opts)
 					vim.keymap.set('n', 'gt', builtin.lsp_type_definitions, opts)
+					vim.keymap.set('n', '<leader>fs', builtin.lsp_dynamic_workspace_symbols, opts)
 					vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
 					vim.keymap.set('n', 'gl', vim.diagnostic.open_float, opts)
 					vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
