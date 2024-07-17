@@ -14,13 +14,6 @@ vim.opt.scrolloff = 20
 
 vim.opt.colorcolumn = "80"
 
--- set colorcolumn to 100 for rust files
-vim.api.nvim_create_autocmd("BufEnter",  {
-	pattern = "*.rs",
-	group = vim.api.nvim_create_augroup("rust-colorcolumn", {}),
-	command = "setlocal colorcolumn=100",
-})
-
 -- remove trailing whitespace on save
 vim.api.nvim_create_autocmd("BufWritePre", {
 	group = vim.api.nvim_create_augroup("remove-trailing-whitespace", {}),
