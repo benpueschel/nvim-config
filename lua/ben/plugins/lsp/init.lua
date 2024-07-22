@@ -1,7 +1,6 @@
 return {
 	{
 		'neovim/nvim-lspconfig',
-		event = { 'BufReadPre', 'BufNewFile' },
 		dependencies = {
 			{ -- Optional
 				'williamboman/mason.nvim',
@@ -13,7 +12,7 @@ return {
 			'WhoIsSethDaniel/mason-tool-installer.nvim', -- Optional
 			{ 'j-hui/fidget.nvim', opts = {} }, -- Optional
 			'folke/trouble.nvim',               -- Optional
-			'folke/neodev.nvim',                -- Optional
+			{ 'folke/neodev.nvim', opts = {} }, -- Optional
 		},
 		config = function()
 			vim.api.nvim_create_autocmd('LspAttach', {
@@ -58,8 +57,6 @@ return {
 
 			local capabilities = vim.lsp.protocol.make_client_capabilities()
 			capabilities = vim.tbl_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
-
-			require('neodev').setup()
 
 			local servers = {
 				lua_ls = {
