@@ -4,35 +4,29 @@ return {
 		dependencies = 'nvim-tree/nvim-web-devicons',
 		event = 'VeryLazy',
 		config = function()
-			local wb = {
-				lualine_a = {
-					{
-						'buffers',
-						show_filename_only = true,
-						symbols = {
-							alternate_file = ''
-						}
-					}
-				},
-				lualine_b = {},
-				lualine_c = {},
-				lualine_x = {},
-				lualine_y = {},
-				lualine_z = {'tabs'}
-			}
-
 			require('lualine').setup({
 
 				options = {
+					globalstatus = true,
 					icons_enabled = true,
 					theme = 'catppuccin',
-					disabled_filetypes = { 'packer', 'NvimTree' },
-					globalstatus = true,
 					component_separators = '',
 					section_separators = '',
 				},
-				winbar = wb,
-				inactive_winbar = wb
+				winbar = nil,
+				inactive_winbar = nil,
+				sections = {
+					lualine_a = { 'mode' },
+					lualine_b = { 'branch', 'diff', 'diagnostics' },
+					lualine_c = {
+						{
+							'filename',
+							file_status = true,
+							path = 1,
+							shorting_target = 40,
+						},
+					},
+				},
 
 			})
 		end
