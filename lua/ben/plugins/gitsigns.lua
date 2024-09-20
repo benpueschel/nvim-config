@@ -3,7 +3,8 @@ return {
 		'lewis6991/gitsigns.nvim',
 		event = 'BufRead',
 		config = function()
-			require('gitsigns').setup({
+			local gitsigns = require('gitsigns')
+			gitsigns.setup({
 				signcolumn = true,
 				current_line_blame = true,
 				signs = {
@@ -15,6 +16,7 @@ return {
 					untracked = { text = "│" },
 				}
 			})
+			vim.keymap.set({ 'n', 'v' }, '<leader>gs', ":Gitsigns stage_hunk<CR>", {})
 		end
 	},
 }

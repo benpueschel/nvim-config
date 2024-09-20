@@ -1,5 +1,7 @@
 vim.g.mapleader = ' '
 
+vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>') -- Clear highlights
+
 vim.keymap.set('n', '<leader>pv', vim.cmd.Ex)
 vim.keymap.set('n', '<C-n>', vim.cmd.bnext)
 vim.keymap.set('n', '<C-m>', vim.cmd.bprev)
