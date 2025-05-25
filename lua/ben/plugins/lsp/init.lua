@@ -67,6 +67,18 @@ return {
 			local capabilities = vim.lsp.protocol.make_client_capabilities()
 			capabilities = vim.tbl_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
+			if vim.fn.executable('conventional-commit-lsp') == 1 then
+				-- Use github.com/benpueschel/conventional-commit-lsp if available
+
+				vim.lsp.config('conventional-commit-lsp', {
+					cmd = { 'conventional-commit-lsp' },
+					filetypes = { 'gitcommit' },
+					root_markers = { '.git' },
+					capabilities = capabilities,
+				})
+				vim.lsp.enable('conventional-commit-lsp')
+			end
+
 			local servers = {
 				lua_ls = {
 					runtime = { version = 'LuaJIT' },
