@@ -12,7 +12,16 @@ return {
 			'WhoIsSethDaniel/mason-tool-installer.nvim', -- Optional
 			{ 'j-hui/fidget.nvim', opts = {} }, -- Optional
 			'folke/trouble.nvim',               -- Optional
-			{ 'folke/neodev.nvim', opts = {} }, -- Optional
+			{                                   -- Optional
+				"folke/lazydev.nvim",
+				ft = "lua",                     -- only load on lua files
+				opts = {
+					library = {
+						-- Load luvit types when the `vim.uv` word is found
+						{ path = "${3rd}/luv/library", words = { "vim%.uv" } },
+					},
+				},
+			},
 		},
 		config = function()
 			vim.api.nvim_create_autocmd('LspAttach', {
